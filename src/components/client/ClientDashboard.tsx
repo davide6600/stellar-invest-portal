@@ -1,0 +1,197 @@
+
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { useAuth } from '@/contexts/AuthContext';
+
+export const ClientDashboard: React.FC = () => {
+  const { user } = useAuth();
+
+  const portfolioValue = 45750;
+  const bitcoinHoldings = 0.85;
+  const strfShares = 150;
+  const strkShares = 75;
+
+  const getKycStatusColor = (status: string) => {
+    switch (status) {
+      case 'approved': return 'bg-success text-white';
+      case 'pending': return 'bg-warning text-white';
+      case 'rejected': return 'bg-danger text-white';
+      default: return 'bg-gray-500 text-white';
+    }
+  };
+
+  const getKycStatusText = (status: string) => {
+    switch (status) {
+      case 'approved': return 'Approvato';
+      case 'pending': return 'In attesa';
+      case 'rejected': return 'Rifiutato';
+      default: return 'Sconosciuto';
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-bg text-white p-6 rounded-lg">
+        <h1 className="text-2xl font-bold mb-2">Benvenuto, {user?.name}</h1>
+        <div className="flex items-center gap-4">
+          <span className="text-brand-light">Status KYC:</span>
+          <Badge className={getKycStatusColor(user?.kycStatus || '')}>
+            {getKycStatusText(user?.kycStatus || '')}
+          </Badge>
+        </div>
+      </div>
+
+      {/* Portfolio Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Valore Portafoglio</CardTitle>
+            <CardDescription>Totale investimenti</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-brand-navy">
+              €{portfolioValue.toLocaleString()}
+            </div>
+            <div className="text-success text-sm mt-2">
+              +2.3% questo mese
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <span className="w-4 h-4 bg-bitcoin rounded-full"></span>
+              Bitcoin
+            </CardTitle>
+            <CardDescription>Holdings BTC</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              ₿ {bitcoinHoldings}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              ≈ €{(bitcoinHoldings * 42000).toLocaleString()}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Azioni Privilegiate</CardTitle>
+            <CardDescription>STRF & STRK</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>STRF</span>
+                <span className="font-medium">{strfShares} azioni</span>
+              </div>
+              <div className="flex justify-between">
+                <span>STRK</span>
+                <span className="font-medium">{strkShares} azioni</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Azioni Rapide</CardTitle>
+          <CardDescription>Gestisci il tuo account e investimenti</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <div className="font-medium">Carica Documenti</div>
+                <div className="text-sm text-muted-foreground">KYC e verifiche</div>
+              </div>
+            </Button>
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <div className="font-medium">Proposte</div>
+                <div className="text-sm text-muted-foreground">Nuove opportunità</div>
+              </div>
+            </Button>
+            <Button variant="outline" className="h-16">
+              <div className="text-center">
+                <div className="font-medium">Chat Supporto</div>
+                <div className="text-sm text-muted-foreground">Assistenza diretta</div>
+              </div>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Portfolio Allocation */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Allocazione Portafoglio</CardTitle>
+          <CardDescription>Distribuzione dei tuoi investimenti</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <div className="flex justify-between mb-2">
+              <span>Bitcoin (₿)</span>
+              <span>65%</span>
+            </div>
+            <Progress value={65} className="h-2" />
+          </div>
+          <div>
+            <div className="flex justify-between mb-2">
+              <span>STRF Shares</span>
+              <span>25%</span>
+            </div>
+            <Progress value={25} className="h-2" />
+          </div>
+          <div>
+            <div className="flex justify-between mb-2">
+              <span>STRK Shares</span>
+              <span>10%</span>
+            </div>
+            <Progress value={10} className="h-2" />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Recent Activity */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Attività Recente</CardTitle>
+          <CardDescription>Ultime transazioni e operazioni</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 border rounded-lg">
+              <div>
+                <div className="font-medium">Acquisto Bitcoin</div>
+                <div className="text-sm text-muted-foreground">15 Gen 2024</div>
+              </div>
+              <div className="text-right">
+                <div className="font-medium">+0.15 ₿</div>
+                <div className="text-sm text-success">Completato</div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-4 border rounded-lg">
+              <div>
+                <div className="font-medium">Acquisto STRF</div>
+                <div className="text-sm text-muted-foreground">12 Gen 2024</div>
+              </div>
+              <div className="text-right">
+                <div className="font-medium">+50 azioni</div>
+                <div className="text-sm text-success">Completato</div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
