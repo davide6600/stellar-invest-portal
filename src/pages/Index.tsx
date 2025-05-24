@@ -13,10 +13,10 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-light">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-gold rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-2xl font-bold text-brand-dark">EB</span>
+          <div className="w-16 h-16 bg-brand-navy rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <span className="text-2xl font-bold text-white">EB</span>
           </div>
           <div className="text-brand-navy font-medium">Caricamento...</div>
         </div>
