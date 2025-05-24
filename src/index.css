@@ -97,16 +97,13 @@
 }
 
 /* Custom styles for E-Bridge Capital */
-.gradient-bg {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-}
-
 .gradient-gold {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
 
 .glass-effect {
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(30, 41, 59, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }

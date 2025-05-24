@@ -3,15 +3,40 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const { toast } = useToast();
 
-  const menuItems = user?.role === 'admin' ? [
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast({
+          title: "Errore",
+          description: "Errore durante il logout",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore imprevisto",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Determina il ruolo dall'email per gli account demo
+  const userRole = user?.email === 'admin@ebridge.ee' ? 'admin' : 'client';
+
+  const menuItems = userRole === 'admin' ? [
     { label: 'Dashboard', href: '#dashboard' },
     { label: 'Clienti', href: '#clients' },
     { label: 'Proposte', href: '#proposals' },
@@ -28,12 +53,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen bg-brand-light">
       {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+      <nav className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-gold rounded-full flex items-center justify-center">
-                <span className="text-lg font-bold text-brand-dark">EB</span>
+              <div className="w-10 h-10 gradient-gold rounded-full flex items-center justify-center">
+                <span className="text-lg font-bold text-white">EB</span>
               </div>
               <div>
                 <h1 className="text-xl font-bold text-brand-navy">E-Bridge Capital</h1>
@@ -44,7 +69,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             {/* Menu Items */}
             <div className="hidden md:flex items-center gap-1">
               {menuItems.map((item) => (
-                <Button key={item.label} variant="ghost" className="text-brand-navy">
+                <Button key={item.label} variant="ghost" className="text-brand-navy hover:bg-slate-100">
                   {item.label}
                 </Button>
               ))}
@@ -53,16 +78,18 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="font-medium text-brand-navy">{user?.name}</div>
+              <div className="font-medium text-brand-navy">
+                {user?.user_metadata?.full_name || user?.email}
+              </div>
               <div className="flex items-center gap-2">
-                <Badge variant={user?.role === 'admin' ? 'default' : 'secondary'}>
-                  {user?.role === 'admin' ? 'Amministratore' : 'Cliente'}
+                <Badge variant={userRole === 'admin' ? 'default' : 'secondary'}>
+                  {userRole === 'admin' ? 'Amministratore' : 'Cliente'}
                 </Badge>
               </div>
             </div>
             <Button 
               variant="outline" 
-              onClick={logout}
+              onClick={handleLogout}
               className="text-brand-navy border-brand-navy hover:bg-brand-navy hover:text-white"
             >
               Esci
