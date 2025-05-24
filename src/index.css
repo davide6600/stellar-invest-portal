@@ -5,16 +5,16 @@
 
 @layer base {
   :root {
-    /*--background: 255 255 255;*/
+    /*--background: #ffffff;*/
     /*--foreground: 15 23 42;*/
     /* light background / dark text */
-    --background: 255 255 255;   /* bianco */
+    --background: #ffffff;   /* bianco */
     --foreground: 32 58 84;      /* #203A54, un blue-professionale */
 
-    --card: 255 255 255;
+    --card: #ffffff;
     --card-foreground: 15 23 42;
 
-    --popover: 255 255 255;
+    --popover: #ffffff;
     --popover-foreground: 15 23 42;
 
     --primary: 30 41 59;
@@ -33,7 +33,7 @@
     /*--accent-foreground: 248 250 252;*/
       /* accentiamo con un blu più deciso */
     --accent: 56 103 214;        /* #3867D6, blue-professionale */
-    --accent-foreground: 255 255 255;
+    --accent-foreground: #ffffff;
 
 
     --destructive: 239 68 68;
@@ -50,7 +50,7 @@
 
     --radius: 0.5rem;
 
-    --sidebar-background: 255 255 255;
+    --sidebar-background: #ffffff;
     --sidebar-foreground: 15 23 42;
     --sidebar-primary: 30 41 59;
     --sidebar-primary-foreground: 248 250 252;
@@ -65,7 +65,7 @@
     /*--foreground: 248 250 252;/*
         /* dark mode invertendo sui toni del blu-grigio */
     --background: 32 58 84;      /* #203A54 */
-    --foreground: 255 255 255;
+    --foreground: #ffffff;
 
     --card: 30 41 59;
     --card-foreground: 248 250 252;
@@ -79,7 +79,7 @@
     /*--secondary: 51 65 85;*/
     /*--secondary-foreground: 248 250 252;*/
     --secondary: 44 59 77;       /* #2C3B4D */
-    --secondary-foreground: 255 255 255;
+    --secondary-foreground: #ffffff;
 
     --muted: 51 65 85;
     --muted-foreground: 148 163 184;
@@ -87,7 +87,7 @@
     /*--accent: 30 41 59;*/
     /*--accent-foreground: 248 250 252;*/
     --accent: 56 103 214;        /* stesso blu-professionale */
-    --accent-foreground: 255 255 255;
+    --accent-foreground: #ffffff;
 
     --destructive: 239 68 68;
     --destructive-foreground: 248 250 252;
