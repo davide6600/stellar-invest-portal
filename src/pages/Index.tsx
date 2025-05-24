@@ -8,17 +8,17 @@ import { ClientDashboard } from '@/components/client/ClientDashboard';
 import { AdminDashboard } from '@/components/admin/AdminDashboard';
 
 const Index = () => {
-  const { user, isLoading } = useAuth();
+  const { user, profile, isLoading } = useAuth();
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100">
         <div className="text-center">
-          <div className="w-16 h-16 bg-brand-navy rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+          <div className="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-lg">
             <span className="text-2xl font-bold text-white">EB</span>
           </div>
-          <div className="text-brand-navy font-medium">Caricamento...</div>
+          <div className="text-slate-700 font-medium text-lg">Caricamento...</div>
         </div>
       </div>
     );
@@ -26,7 +26,7 @@ const Index = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {isLoginMode ? (
             <LoginForm onToggleMode={() => setIsLoginMode(false)} />
@@ -40,7 +40,7 @@ const Index = () => {
 
   return (
     <AppLayout>
-      {user.role === 'admin' ? <AdminDashboard /> : <ClientDashboard />}
+      {profile?.role === 'admin' ? <AdminDashboard /> : <ClientDashboard />}
     </AppLayout>
   );
 };
