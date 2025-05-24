@@ -5,8 +5,11 @@
 
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 15 23 42;
+    /*--background: 255 255 255;*/
+    /*--foreground: 15 23 42;*/
+    /* light background / dark text */
+    --background: 255 255 255;   /* bianco */
+    --foreground: 32 58 84;      /* #203A54, un blue-professionale */
 
     --card: 255 255 255;
     --card-foreground: 15 23 42;
@@ -17,14 +20,21 @@
     --primary: 30 41 59;
     --primary-foreground: 248 250 252;
 
-    --secondary: 241 245 249;
-    --secondary-foreground: 30 41 59;
+    /*--secondary: 241 245 249;*/
+    /*--secondary-foreground: 30 41 59;*/
+    /* sostituiamo il “giallo chiarissimo” con un grigio-blu pulito */
+    --secondary: 237 242 247;    /* #EDF2F7, light slate */
+    --secondary-foreground: 32 58 84;
 
     --muted: 241 245 249;
     --muted-foreground: 100 116 139;
 
-    --accent: 30 41 59;
-    --accent-foreground: 248 250 252;
+    /*--accent: 30 41 59;*/
+    /*--accent-foreground: 248 250 252;*/
+      /* accentiamo con un blu più deciso */
+    --accent: 56 103 214;        /* #3867D6, blue-professionale */
+    --accent-foreground: 255 255 255;
+
 
     --destructive: 239 68 68;
     --destructive-foreground: 248 250 252;
@@ -32,6 +42,11 @@
     --border: 226 232 240;
     --input: 226 232 240;
     --ring: 30 41 59;
+
+          /* campi di input / bordi / ring su focus */
+    --input: 237 242 247;        /* #EDF2F7 */
+    --border: 226 232 240;       /* rimane neutro */
+    --ring: 56 103 214;          /* matching accent */
 
     --radius: 0.5rem;
 
@@ -46,8 +61,11 @@
   }
 
   .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
+    /*--background: 15 23 42;/*
+    /*--foreground: 248 250 252;/*
+        /* dark mode invertendo sui toni del blu-grigio */
+    --background: 32 58 84;      /* #203A54 */
+    --foreground: 255 255 255;
 
     --card: 30 41 59;
     --card-foreground: 248 250 252;
@@ -58,21 +76,29 @@
     --primary: 248 250 252;
     --primary-foreground: 30 41 59;
 
-    --secondary: 51 65 85;
-    --secondary-foreground: 248 250 252;
+    /*--secondary: 51 65 85;*/
+    /*--secondary-foreground: 248 250 252;*/
+    --secondary: 44 59 77;       /* #2C3B4D */
+    --secondary-foreground: 255 255 255;
 
     --muted: 51 65 85;
     --muted-foreground: 148 163 184;
 
-    --accent: 30 41 59;
-    --accent-foreground: 248 250 252;
+    /*--accent: 30 41 59;*/
+    /*--accent-foreground: 248 250 252;*/
+    --accent: 56 103 214;        /* stesso blu-professionale */
+    --accent-foreground: 255 255 255;
 
     --destructive: 239 68 68;
     --destructive-foreground: 248 250 252;
 
-    --border: 51 65 85;
-    --input: 51 65 85;
-    --ring: 148 163 184;
+    /*--border: 51 65 85;*/
+    /*--input: 51 65 85;*/
+    /*--ring: 148 163 184;*/
+
+    --input: 44 59 77;           /* campi più scuri */
+    --border: 44 59 77;
+    --ring: 56 103 214;
 
     --sidebar-background: 30 41 59;
     --sidebar-foreground: 248 250 252;
