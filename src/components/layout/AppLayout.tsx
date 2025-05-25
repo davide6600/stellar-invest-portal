@@ -56,6 +56,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   const menuItems = userRole === 'admin' ? adminMenuItems : clientMenuItems;
 
+  const handleMenuClick = (section: NavigationSection) => {
+    console.log('Menu clicked:', section);
+    navigateTo(section);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Top Navigation */}
@@ -76,13 +81,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <div className="hidden md:flex items-center gap-1">
               {menuItems.map((item) => {
                 const Icon = item.icon;
+                const isActive = activeSection === item.key;
                 return (
                   <Button 
                     key={item.key} 
-                    variant={activeSection === item.key ? "default" : "ghost"}
-                    onClick={() => navigateTo(item.key)}
-                    className={`text-slate-700 hover:bg-slate-100 hover:text-slate-800 ${
-                      activeSection === item.key 
+                    variant={isActive ? "default" : "ghost"}
+                    onClick={() => handleMenuClick(item.key)}
+                    className={`text-slate-700 hover:bg-slate-100 hover:text-slate-800 transition-colors ${
+                      isActive 
                         ? 'bg-slate-800 text-white hover:bg-slate-700 hover:text-white' 
                         : ''
                     }`}
@@ -114,6 +120,30 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               Esci
             </Button>
           </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className="md:hidden mt-4 flex flex-wrap gap-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.key;
+            return (
+              <Button 
+                key={item.key} 
+                variant={isActive ? "default" : "ghost"}
+                size="sm"
+                onClick={() => handleMenuClick(item.key)}
+                className={`text-slate-700 hover:bg-slate-100 hover:text-slate-800 ${
+                  isActive 
+                    ? 'bg-slate-800 text-white hover:bg-slate-700 hover:text-white' 
+                    : ''
+                }`}
+              >
+                <Icon className="w-4 h-4 mr-2" />
+                {item.label}
+              </Button>
+            );
+          })}
         </div>
       </nav>
 

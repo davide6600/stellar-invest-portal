@@ -14,6 +14,7 @@ export const useNavigation = () => {
   const [activeSection, setActiveSection] = useState<NavigationSection>('dashboard');
 
   const navigateTo = (section: NavigationSection) => {
+    console.log('Navigating to:', section);
     setActiveSection(section);
   };
 

@@ -48,6 +48,8 @@ const Index = () => {
   const renderContent = () => {
     const userRole = profile?.role || (user?.email === 'admin@ebridge.ee' ? 'admin' : 'client');
 
+    console.log('Rendering content for section:', activeSection, 'role:', userRole);
+
     if (userRole === 'admin') {
       switch (activeSection) {
         case 'clients':
