@@ -5,6 +5,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigation, NavigationSection } from '@/hooks/useNavigation';
+import { LayoutDashboard, Wallet, FileText, TrendingUp, MessageCircle, Users, Settings } from 'lucide-react';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -13,6 +15,7 @@ interface AppLayoutProps {
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { user, profile } = useAuth();
   const { toast } = useToast();
+  const { activeSection, navigateTo } = useNavigation();
 
   const handleLogout = async () => {
     try {
@@ -33,22 +36,25 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     }
   };
 
-  // Determina il ruolo dall'email per gli account demo o dal profilo
   const userRole = profile?.role || (user?.email === 'admin@ebridge.ee' ? 'admin' : 'client');
 
-  const menuItems = userRole === 'admin' ? [
-    { label: 'Dashboard', href: '#dashboard' },
-    { label: 'Clienti', href: '#clients' },
-    { label: 'Proposte', href: '#proposals' },
-    { label: 'Documenti', href: '#documents' },
-    { label: 'Impostazioni', href: '#settings' }
-  ] : [
-    { label: 'Dashboard', href: '#dashboard' },
-    { label: 'Portafoglio', href: '#portfolio' },
-    { label: 'Documenti', href: '#documents' },
-    { label: 'Proposte', href: '#proposals' },
-    { label: 'Chat', href: '#chat' }
+  const clientMenuItems = [
+    { key: 'dashboard' as NavigationSection, label: 'Dashboard', icon: LayoutDashboard },
+    { key: 'portfolio' as NavigationSection, label: 'Portafoglio', icon: Wallet },
+    { key: 'documents' as NavigationSection, label: 'Documenti', icon: FileText },
+    { key: 'proposals' as NavigationSection, label: 'Proposte', icon: TrendingUp },
+    { key: 'chat' as NavigationSection, label: 'Chat', icon: MessageCircle }
   ];
+
+  const adminMenuItems = [
+    { key: 'dashboard' as NavigationSection, label: 'Dashboard', icon: LayoutDashboard },
+    { key: 'clients' as NavigationSection, label: 'Clienti', icon: Users },
+    { key: 'proposals' as NavigationSection, label: 'Proposte', icon: TrendingUp },
+    { key: 'documents' as NavigationSection, label: 'Documenti', icon: FileText },
+    { key: 'settings' as NavigationSection, label: 'Impostazioni', icon: Settings }
+  ];
+
+  const menuItems = userRole === 'admin' ? adminMenuItems : clientMenuItems;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -68,11 +74,24 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             
             {/* Menu Items */}
             <div className="hidden md:flex items-center gap-1">
-              {menuItems.map((item) => (
-                <Button key={item.label} variant="ghost" className="text-slate-700 hover:bg-slate-100 hover:text-slate-800">
-                  {item.label}
-                </Button>
-              ))}
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Button 
+                    key={item.key} 
+                    variant={activeSection === item.key ? "default" : "ghost"}
+                    onClick={() => navigateTo(item.key)}
+                    className={`text-slate-700 hover:bg-slate-100 hover:text-slate-800 ${
+                      activeSection === item.key 
+                        ? 'bg-slate-800 text-white hover:bg-slate-700 hover:text-white' 
+                        : ''
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 mr-2" />
+                    {item.label}
+                  </Button>
+                );
+              })}
             </div>
           </div>
 

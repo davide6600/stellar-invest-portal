@@ -5,10 +5,17 @@ import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ClientDashboard } from '@/components/client/ClientDashboard';
+import { PortfolioSection } from '@/components/client/PortfolioSection';
+import { DocumentsSection } from '@/components/client/DocumentsSection';
+import { ProposalsSection } from '@/components/client/ProposalsSection';
+import { ChatSection } from '@/components/client/ChatSection';
 import { AdminDashboard } from '@/components/admin/AdminDashboard';
+import { ClientsSection } from '@/components/admin/ClientsSection';
+import { useNavigation } from '@/hooks/useNavigation';
 
 const Index = () => {
   const { user, profile, isLoading } = useAuth();
+  const { activeSection } = useNavigation();
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   if (isLoading) {
@@ -38,9 +45,41 @@ const Index = () => {
     );
   }
 
+  const renderContent = () => {
+    const userRole = profile?.role || (user?.email === 'admin@ebridge.ee' ? 'admin' : 'client');
+
+    if (userRole === 'admin') {
+      switch (activeSection) {
+        case 'clients':
+          return <ClientsSection />;
+        case 'proposals':
+          return <ProposalsSection />;
+        case 'documents':
+          return <DocumentsSection />;
+        case 'settings':
+          return <div className="text-center py-8 text-slate-600">Sezione Impostazioni in sviluppo</div>;
+        default:
+          return <AdminDashboard />;
+      }
+    } else {
+      switch (activeSection) {
+        case 'portfolio':
+          return <PortfolioSection />;
+        case 'documents':
+          return <DocumentsSection />;
+        case 'proposals':
+          return <ProposalsSection />;
+        case 'chat':
+          return <ChatSection />;
+        default:
+          return <ClientDashboard />;
+      }
+    }
+  };
+
   return (
     <AppLayout>
-      {profile?.role === 'admin' ? <AdminDashboard /> : <ClientDashboard />}
+      {renderContent()}
     </AppLayout>
   );
 };
