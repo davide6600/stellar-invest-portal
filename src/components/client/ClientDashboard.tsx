@@ -5,9 +5,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export const ClientDashboard: React.FC = () => {
   const { user, profile } = useAuth();
+  const { navigateTo } = useNavigation();
 
   const portfolioValue = 45750;
   const bitcoinHoldings = 0.85;
@@ -114,19 +116,31 @@ export const ClientDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="h-16 border-slate-300 hover:bg-slate-50">
+            <Button 
+              variant="outline" 
+              className="h-16 border-slate-300 hover:bg-slate-50"
+              onClick={() => navigateTo('documents')}
+            >
               <div className="text-center">
                 <div className="font-medium text-slate-800">Carica Documenti</div>
                 <div className="text-sm text-slate-600">KYC e verifiche</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-16 border-slate-300 hover:bg-slate-50">
+            <Button 
+              variant="outline" 
+              className="h-16 border-slate-300 hover:bg-slate-50"
+              onClick={() => navigateTo('proposals')}
+            >
               <div className="text-center">
                 <div className="font-medium text-slate-800">Proposte</div>
                 <div className="text-sm text-slate-600">Nuove opportunità</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-16 border-slate-300 hover:bg-slate-50">
+            <Button 
+              variant="outline" 
+              className="h-16 border-slate-300 hover:bg-slate-50"
+              onClick={() => navigateTo('chat')}
+            >
               <div className="text-center">
                 <div className="font-medium text-slate-800">Chat Supporto</div>
                 <div className="text-sm text-slate-600">Assistenza diretta</div>
@@ -134,7 +148,7 @@ export const ClientDashboard: React.FC = () => {
             </Button>
           </div>
         </CardContent>
-      </Card>
+      </div>
 
       {/* Portfolio Allocation */}
       <Card className="border-slate-200 shadow-sm">

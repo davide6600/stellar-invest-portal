@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export const AdminDashboard: React.FC = () => {
+  const { navigateTo } = useNavigation();
+  
   const clients = [
     {
       id: '1',
@@ -67,9 +70,9 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-bg text-white p-6 rounded-lg">
+      <div className="bg-gradient-to-br from-slate-700 to-slate-800 text-white p-6 rounded-lg">
         <h1 className="text-2xl font-bold mb-2">Dashboard Amministratore</h1>
-        <p className="text-brand-light">Gestione clienti E-Bridge Capital</p>
+        <p className="text-slate-200">Gestione clienti E-Bridge Capital</p>
       </div>
 
       {/* Stats Overview */}
@@ -79,7 +82,7 @@ export const AdminDashboard: React.FC = () => {
             <CardTitle className="text-lg">Clienti Totali</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-brand-navy">{totalClients}</div>
+            <div className="text-3xl font-bold text-slate-800">{totalClients}</div>
           </CardContent>
         </Card>
 
@@ -88,7 +91,7 @@ export const AdminDashboard: React.FC = () => {
             <CardTitle className="text-lg">KYC Approvati</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-success">{approvedClients}</div>
+            <div className="text-3xl font-bold text-green-600">{approvedClients}</div>
           </CardContent>
         </Card>
 
@@ -97,7 +100,7 @@ export const AdminDashboard: React.FC = () => {
             <CardTitle className="text-lg">KYC Pendenti</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-warning">{pendingClients}</div>
+            <div className="text-3xl font-bold text-yellow-600">{pendingClients}</div>
           </CardContent>
         </Card>
 
@@ -106,7 +109,7 @@ export const AdminDashboard: React.FC = () => {
             <CardTitle className="text-lg">AUM Totale</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-brand-navy">
+            <div className="text-3xl font-bold text-slate-800">
               €{totalAUM.toLocaleString()}
             </div>
           </CardContent>
@@ -120,8 +123,11 @@ export const AdminDashboard: React.FC = () => {
             <CardTitle>Gestione Clienti</CardTitle>
             <CardDescription>Elenco e stato di tutti i clienti</CardDescription>
           </div>
-          <Button className="bg-brand-navy hover:bg-brand-dark">
-            Nuovo Cliente
+          <Button 
+            className="bg-slate-800 hover:bg-slate-700"
+            onClick={() => navigateTo('clients')}
+          >
+            Gestisci Clienti
           </Button>
         </CardHeader>
         <CardContent>
@@ -142,7 +148,7 @@ export const AdminDashboard: React.FC = () => {
                   <TableCell className="font-medium">{client.name}</TableCell>
                   <TableCell>{client.email}</TableCell>
                   <TableCell>
-                    <Badge className={getKycStatusColor(client.kycStatus)}>
+                    <Badge className={`${client.kycStatus === 'approved' ? 'bg-green-600' : 'bg-yellow-600'} text-white`}>
                       {getKycStatusText(client.kycStatus)}
                     </Badge>
                   </TableCell>
@@ -153,10 +159,18 @@ export const AdminDashboard: React.FC = () => {
                       <Button variant="outline" size="sm">
                         Modifica
                       </Button>
-                      <Button variant="outline" size="sm">
-                        Messaggi
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => navigateTo('chat')}
+                      >
+                        Chat
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => navigateTo('proposals')}
+                      >
                         Proposte
                       </Button>
                     </div>
@@ -182,15 +196,24 @@ export const AdminDashboard: React.FC = () => {
                   <div className="font-medium">Acquisto Bitcoin 0.2 BTC</div>
                   <div className="text-sm text-muted-foreground">Marco Rossi</div>
                 </div>
-                <Badge className="bg-warning text-white">In attesa</Badge>
+                <Badge className="bg-yellow-600 text-white">In attesa</Badge>
               </div>
               <div className="flex items-center justify-between p-4 border rounded-lg">
                 <div>
                   <div className="font-medium">Vendita STRF 50 azioni</div>
                   <div className="text-sm text-muted-foreground">Alessandro Verdi</div>
                 </div>
-                <Badge className="bg-success text-white">Accettata</Badge>
+                <Badge className="bg-green-600 text-white">Accettata</Badge>
               </div>
+            </div>
+            <div className="mt-4">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigateTo('proposals')}
+              >
+                Vedi Tutte le Proposte
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -220,6 +243,15 @@ export const AdminDashboard: React.FC = () => {
                   Verifica
                 </Button>
               </div>
+            </div>
+            <div className="mt-4">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigateTo('documents')}
+              >
+                Gestisci Documenti
+              </Button>
             </div>
           </CardContent>
         </Card>
