@@ -60,6 +60,7 @@ const Index = () => {
           return <DocumentsSection />;
         case 'settings':
           return <div className="text-center py-8 text-slate-600">Sezione Impostazioni in sviluppo</div>;
+        case 'dashboard':
         default:
           return <AdminDashboard />;
       }
@@ -73,6 +74,7 @@ const Index = () => {
           return <ProposalsSection />;
         case 'chat':
           return <ChatSection />;
+        case 'dashboard':
         default:
           return <ClientDashboard />;
       }
